@@ -44,11 +44,11 @@ if ENVIRONMENT == 'local':
 
 elif ENVIRONMENT == 'production':
     DEBUG = False
-    ALLOWED_HOSTS = ['https://sd-dev.up.railway.app/']
+    ALLOWED_HOSTS = [config('APP_URL'), 'localhost', '127.0.0.1']
     DATABASES = {
            'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_URL'),
+            'NAME': config('DB_NAME'),
             'USER': config('DB_USER'),
             'PASSWORD': config('DB_PASSWORD'),
             'HOST': config('DB_HOST'),
