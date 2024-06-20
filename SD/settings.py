@@ -44,7 +44,7 @@ if ENVIRONMENT == 'local':
 
 elif ENVIRONMENT == 'production':
     DEBUG = False
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['https://sd-dev.up.railway.app/']
     DATABASES = {
            'default': {
             'ENGINE': 'django.db.backends.postgresql',
