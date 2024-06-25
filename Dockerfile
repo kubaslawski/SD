@@ -12,6 +12,9 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
+# Run collectstatic
+RUN python manage.py collectstatic
+
 # Copy project files
 COPY . .
 
