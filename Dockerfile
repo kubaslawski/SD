@@ -24,4 +24,6 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Command to run the application
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "SD.wsgi:application"]
+#CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "SD.wsgi:application"]
+
+CMD ["python", "manage.py", "runserver"]
