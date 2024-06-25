@@ -28,34 +28,45 @@ ENVIRONMENT = config('DJANGO_ENV', default='local')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-29v&t=v47rlxmw9cv*(@7e1^qy#w+ap^d!g=s32p(ifo2k7n0i'
 
-if ENVIRONMENT == 'local':
-    DEBUG = True
-    ALLOWED_HOSTS = ['*']
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'SD',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
-    }
+# if ENVIRONMENT == 'local':
+#     DEBUG = True
+#     ALLOWED_HOSTS = ['*']
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': 'SD',
+#             'USER': 'postgres',
+#             'PASSWORD': 'postgres',
+#             'HOST': '127.0.0.1',
+#             'PORT': '5432',
+#         }
+#     }
 
-elif ENVIRONMENT == 'production':
-    DEBUG = False
-    ALLOWED_HOSTS = [config('APP_URL'), 'localhost', '127.0.0.1']
-    DATABASES = {
-           'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST'),
-            'PORT': config('DB_PORT'),
-        }
+# elif ENVIRONMENT == 'production':
+#     DEBUG = False
+#     ALLOWED_HOSTS = [config('APP_URL'), 'localhost', '127.0.0.1']
+#     DATABASES = {
+#            'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': config('DB_NAME'),
+#             'USER': config('DB_USER'),
+#             'PASSWORD': config('DB_PASSWORD'),
+#             'HOST': config('DB_HOST'),
+#             'PORT': config('DB_PORT'),
+#         }
+#     }
+DEBUG = False
+ALLOWED_HOSTS = [config('APP_URL'), 'localhost', '127.0.0.1']
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
-
+}
 # Application definition
 AUTH_USER_MODEL = "SDApp.CustomUser"
 AUTHENTICATION_BACKENDS = ["SDApp.auth.auth.EmailAuth"]
