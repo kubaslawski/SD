@@ -47,12 +47,18 @@ elif ENVIRONMENT == 'production':
     ALLOWED_HOSTS = [config('APP_URL'), 'localhost', '127.0.0.1']
     DATABASES = {
            'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST'),
-            'PORT': config('DB_PORT'),
+            # 'ENGINE': 'django.db.backends.postgresql',
+            # 'NAME': config('DB_NAME'),
+            # 'USER': config('DB_USER'),
+            # 'PASSWORD': config('DB_PASSWORD'),
+            # 'HOST': config('DB_HOST'),
+            # 'PORT': config('DB_PORT'),
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': os.environ.get('DATABASE_NAME', 'sd'),
+           'USER': os.environ.get('DATABASE_USER', 'postgres'),
+           'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'postgres'),
+           'HOST': os.environ.get('DATABASE_HOST', 'db'),
+           'PORT': os.environ.get('DATABASE_PORT', '5432'),
         }
     }
 
