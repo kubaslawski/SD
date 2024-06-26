@@ -1,4 +1,4 @@
 from .user import (
     CustomUserLoginView,
-    CustomUserRegisterView
+    CustomUserRegisterView,
 )
