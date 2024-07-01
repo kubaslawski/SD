@@ -1,0 +1,140 @@
+module.exports = {
+  env: {browser: true, es2020: true},
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'prettier',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:react-hooks/recommended',
+    'plugin:storybook/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.eslint.json', './tsconfig.node.json'],
+  },
+
+  plugins: ['react-refresh', 'no-null', 'import'],
+  settings: {
+    'import/resolver': {
+      typescript: {},
+    },
+    react: {
+      version: 'detect',
+    },
+  },
+
+  rules: {
+    indent: [
+      'off',
+      2,
+      {
+        SwitchCase: 1,
+      },
+    ],
+    'simple-import-sort/imports': 'off',
+    'simple-import-sort/exports': 'off',
+    'import/order': 'error',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-unresolved': 'error',
+    'import/named': 'off',
+    'import/namespace': 'error',
+    'import/default': 'error',
+    'import/export': 'error',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+    'no-null/no-null': 2,
+    quotes: ['error', 'single', {allowTemplateLiterals: true}],
+    '@typescript-eslint/no-inferrable-types': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'no-empty-pattern': 'off',
+    'no-restricted-globals': 'off',
+    'space-before-blocks': 'error',
+    'space-unary-ops': 'error',
+    'space-infix-ops': 'error',
+    'space-before-function-paren': 'off',
+    'space-in-parens': 'error',
+    'keyword-spacing': 'error',
+    'object-curly-spacing': ['error', 'never'],
+    'no-multi-spaces': 'error',
+    semi: [2, 'always'],
+    'lines-between-class-members': [
+      'error',
+      'always',
+      {
+        exceptAfterSingleLine: true,
+      },
+    ],
+    'react/jsx-tag-spacing': [
+      'error',
+      {
+        closingSlash: 'never',
+        beforeSelfClosing: 'always',
+        afterOpening: 'never',
+        beforeClosing: 'never',
+      },
+    ],
+    'react/self-closing-comp': [
+      'error',
+      {
+        component: true,
+        html: true,
+      },
+    ],
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/display-name': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+        fixStyle: 'inline-type-imports',
+        disallowTypeAnnotations: false,
+      },
+    ],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: true,
+      },
+    ],
+    '@typescript-eslint/no-confusing-non-null-assertion': 'error',
+    '@typescript-eslint/no-duplicate-enum-values': 'error',
+    '@typescript-eslint/no-invalid-void-type': 'error',
+    '@typescript-eslint/no-mixed-enums': 'error',
+    '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
+    '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+    '@typescript-eslint/no-unnecessary-condition': 'error',
+    '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+    '@typescript-eslint/no-unsafe-argument': 'error',
+    '@typescript-eslint/no-unsafe-enum-comparison': 'error',
+    '@typescript-eslint/no-unsafe-return': 'error',
+    '@typescript-eslint/non-nullable-type-assertion-style': 'error',
+  },
+  overrides: [
+    {
+      files: ['src/**/*.ts?(x)'],
+      rules: {
+        'import/no-default-export': 'off',
+      },
+    },
+  ],
+  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts'],
+};
