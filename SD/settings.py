@@ -9,13 +9,17 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
-from pathlib import Path
 from datetime import timedelta
+from decouple import config
+from pathlib import Path
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# env
+ENVIRONMENT = config('DJANGO_ENV', default='local')
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,16 +28,43 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-29v&t=v47rlxmw9cv*(@7e1^qy#w+ap^d!g=s32p(ifo2k7n0i'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if ENVIRONMENT == 'local':
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DATABASE_NAME', 'sd'),
+            'USER': os.environ.get('DATABASE_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'postgres'),
+            'HOST': os.environ.get('DATABASE_HOST', 'db'),
+            'PORT': os.environ.get('DATABASE_PORT', '5432'),
+        }
+    }
 
-ALLOWED_HOSTS = []
-
+elif ENVIRONMENT == 'production':
+    DEBUG = False
+    ALLOWED_HOSTS = [config('APP_URL'), 'localhost', '127.0.0.1']
+    DATABASES = {
+           'default': {
+            # 'ENGINE': 'django.db.backends.postgresql',
+            # 'NAME': config('DB_NAME'),
+            # 'USER': config('DB_USER'),
+            # 'PASSWORD': config('DB_PASSWORD'),
+            # 'HOST': config('DB_HOST'),
+            # 'PORT': config('DB_PORT'),
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': os.environ.get('DATABASE_NAME', 'sd'),
+           'USER': os.environ.get('DATABASE_USER', 'postgres'),
+           'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'postgres'),
+           'HOST': os.environ.get('DATABASE_HOST', 'db'),
+           'PORT': os.environ.get('DATABASE_PORT', '5432'),
+        }
+    }
 
 # Application definition
-
 AUTH_USER_MODEL = "SDApp.CustomUser"
-AUTHENTICATION_BACKENDS = "SDApp.auth.auth"
+AUTHENTICATION_BACKENDS = ["SDApp.auth.auth.EmailAuth"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -104,14 +135,6 @@ WSGI_APPLICATION = 'SD.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -146,7 +169,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files (Uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

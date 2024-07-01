@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from SDApp.auth.auth import EmailAuth
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 
 class CustomUserRegisterView(APIView):
@@ -29,7 +30,7 @@ class CustomUserRegisterView(APIView):
             user.save()
 
             return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -42,11 +43,13 @@ class CustomUserLoginView(APIView):
         if serializer.is_valid():
             email = serializer.validated_data["email"]
             password = serializer.validated_data["password"]
-            result = self.auth.authenticate(request, email, password)
-            if result:
-                refresh_token, access_token = result
+            user = self.auth.authenticate(request, email, password)
+            if user:
+                refresh_token = RefreshToken.for_user(user)
+                access_token = AccessToken.for_user(user)
                 return Response(
-                    {"refresh_token": refresh_token, "access_token": access_token},
+                    {"refresh_token": str(refresh_token), "access_token": str(access_token)},
                     status=status.HTTP_200_OK,
                 )
+
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
